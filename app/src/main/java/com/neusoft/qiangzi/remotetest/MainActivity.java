@@ -89,11 +89,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         aSwitch4.setOnCheckedChangeListener(this);
         aSwitch5.setOnCheckedChangeListener(this);
 
-        imageView1.setVisibility(View.INVISIBLE);
-        imageView2.setVisibility(View.INVISIBLE);
-        imageView3.setVisibility(View.INVISIBLE);
-        imageView4.setVisibility(View.INVISIBLE);
-        imageView5.setVisibility(View.INVISIBLE);
+//        imageView1.setVisibility(View.INVISIBLE);
+//        imageView2.setVisibility(View.INVISIBLE);
+//        imageView3.setVisibility(View.INVISIBLE);
+//        imageView4.setVisibility(View.INVISIBLE);
+//        imageView5.setVisibility(View.INVISIBLE);
     }
 
     @Override
