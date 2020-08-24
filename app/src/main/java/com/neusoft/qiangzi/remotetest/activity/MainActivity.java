@@ -1,6 +1,5 @@
-package com.neusoft.qiangzi.remotetest;
+package com.neusoft.qiangzi.remotetest.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,16 +8,16 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 
+import com.neusoft.qiangzi.remotetest.bean.LightBean;
+import com.neusoft.qiangzi.remotetest.model.LightViewModel;
+import com.neusoft.qiangzi.remotetest.R;
 import com.neusoft.qiangzi.socketservicedemo.IOnSocketReceivedListener;
 import com.neusoft.qiangzi.socketservicedemo.ISocketBinder;
 
@@ -30,11 +29,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     Switch aSwitch3;
     Switch aSwitch4;
     Switch aSwitch5;
-    ImageView imageView1;
-    ImageView imageView2;
-    ImageView imageView3;
-    ImageView imageView4;
-    ImageView imageView5;
+    ImageView imageViewRed;
+    ImageView imageViewYellow;
+    ImageView imageViewGreen;
+    ImageView imageViewBlue;
+    ImageView imageViewPurple;
 
     LightViewModel viewModel;
 
@@ -51,24 +50,24 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         setContentView(R.layout.activity_main);
 
         viewModel = new ViewModelProvider(this).get(LightViewModel.class);
-        viewModel.getMutableLiveData().observe(this, new Observer<Light>() {
+        viewModel.getmMutableLiveData().observe(this, new Observer<LightBean>() {
             @Override
-            public void onChanged(Light light) {
-                aSwitch1.setChecked(light.isLightOn1());
-                aSwitch2.setChecked(light.isLightOn2());
-                aSwitch3.setChecked(light.isLightOn3());
-                aSwitch4.setChecked(light.isLightOn4());
-                aSwitch5.setChecked(light.isLightOn5());
-                if(light.isLightOn1()) imageView1.setImageResource(R.drawable.ic_light_red);
-                else imageView1.setImageResource(R.drawable.ic_light_black);
-                if(light.isLightOn2()) imageView2.setImageResource(R.drawable.ic_light_yellow);
-                else imageView2.setImageResource(R.drawable.ic_light_black);
-                if(light.isLightOn3()) imageView3.setImageResource(R.drawable.ic_light_green);
-                else imageView3.setImageResource(R.drawable.ic_light_black);
-                if(light.isLightOn4()) imageView4.setImageResource(R.drawable.ic_light_blue);
-                else imageView4.setImageResource(R.drawable.ic_light_black);
-                if(light.isLightOn5()) imageView5.setImageResource(R.drawable.ic_light_purple);
-                else imageView5.setImageResource(R.drawable.ic_light_black);
+            public void onChanged(LightBean lightBean) {
+                aSwitch1.setChecked(lightBean.isLightOn1());
+                aSwitch2.setChecked(lightBean.isLightOn2());
+                aSwitch3.setChecked(lightBean.isLightOn3());
+                aSwitch4.setChecked(lightBean.isLightOn4());
+                aSwitch5.setChecked(lightBean.isLightOn5());
+                if(lightBean.isLightOn1()) imageViewRed.setImageResource(R.drawable.ic_light_red);
+                else imageViewRed.setImageResource(R.drawable.ic_light_black);
+                if(lightBean.isLightOn2()) imageViewYellow.setImageResource(R.drawable.ic_light_yellow);
+                else imageViewYellow.setImageResource(R.drawable.ic_light_black);
+                if(lightBean.isLightOn3()) imageViewGreen.setImageResource(R.drawable.ic_light_green);
+                else imageViewGreen.setImageResource(R.drawable.ic_light_black);
+                if(lightBean.isLightOn4()) imageViewBlue.setImageResource(R.drawable.ic_light_blue);
+                else imageViewBlue.setImageResource(R.drawable.ic_light_black);
+                if(lightBean.isLightOn5()) imageViewPurple.setImageResource(R.drawable.ic_light_purple);
+                else imageViewPurple.setImageResource(R.drawable.ic_light_black);
             }
         });
 
@@ -77,11 +76,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         aSwitch3 = findViewById(R.id.switch3);
         aSwitch4 = findViewById(R.id.switch4);
         aSwitch5 = findViewById(R.id.switch5);
-        imageView1 = findViewById(R.id.imageView1);
-        imageView2 = findViewById(R.id.imageView2);
-        imageView3 = findViewById(R.id.imageView3);
-        imageView4 = findViewById(R.id.imageView4);
-        imageView5 = findViewById(R.id.imageView5);
+        imageViewRed = findViewById(R.id.imageView1);
+        imageViewYellow = findViewById(R.id.imageView2);
+        imageViewGreen = findViewById(R.id.imageView3);
+        imageViewBlue = findViewById(R.id.imageView4);
+        imageViewPurple = findViewById(R.id.imageView5);
 
         aSwitch1.setOnCheckedChangeListener(this);
         aSwitch2.setOnCheckedChangeListener(this);
@@ -123,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
         Log.d(TAG, "onServiceConnected: is called.");
         binder = ISocketBinder.Stub.asInterface(iBinder);
-        viewModel.setBinder(binder);
+        viewModel.setmBinder(binder);
         try {
             binder.registerListener(receivedListener);
         } catch (RemoteException e) {

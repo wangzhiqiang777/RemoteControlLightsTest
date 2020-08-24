@@ -1,6 +1,6 @@
-package com.neusoft.qiangzi.remotetest;
+package com.neusoft.qiangzi.remotetest.bean;
 
-public class Light {
+public class LightBean {
     private boolean lightOn1;
     private boolean lightOn2;
     private boolean lightOn3;
